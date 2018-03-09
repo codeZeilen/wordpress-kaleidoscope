@@ -2,7 +2,7 @@ import './filters.css';
 import React from "react";
 
 import Actions from "../../actions/Actions";
-import { ActionTypes } from "../../constants/constants";
+import {ActionTypes} from "../../constants/constants";
 import AppStore from '../../stores/AppStore';
 
 import MainFilter from './MainFilter';
@@ -12,9 +12,9 @@ import Search from '../search/Search';
 
 export default class Filters extends React.Component {
 
-    constructor(props) {
+    constructor (props) {
         super(props);
-        this.state = { mounted: false };
+        this.state = {mounted: false};
         this.onClear = this.onClear.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onClickFilterMenuButton = this.onClickFilterMenuButton.bind(this);
@@ -23,11 +23,11 @@ export default class Filters extends React.Component {
         this.onToggleSearch = this.onToggleSearch.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount () {
         setTimeout(() => this.setState({mounted: true}), 100);
     }
 
-    render() {
+    render () {
         let classes = '';
         if (!window.portfolio_lockSidebar && (this.props.overview || this.props.blur)) {
             classes += 'filters__overview';
@@ -48,7 +48,7 @@ export default class Filters extends React.Component {
         let icnLogoStyles = {}
         if (!window.portfolio_showSapLogo) {
             // move the logo to the left if the SAP logo is not shown
-            icnLogoStyles = { left: "10px" };
+            icnLogoStyles = {left: "10px"};
         }
         if (!this.props.overview && this.props.showCredit) {
             classes += "icnCreditVisible"
@@ -66,13 +66,13 @@ export default class Filters extends React.Component {
             cursor: 'pointer'
         }
 
-        let logoClass = window.portfolio_logo_right ? 'filterLogoRight' : 'filterLogo';
+        // let logoClass = window.portfolio_logo_right ? 'filterLogoRight' : 'filterLogo';
 
-        var headerLogo = <img id="icnLogo"
-                              alt="Innovation Center Network"
-                              src={window.portfolioLogoPath}
-                              className={logoClass}
-                              onClick={this.onClickReload}/>
+        // var headerLogo = <img id="icnLogo"
+        //                       alt="Innovation Center Network"
+        //                       src={window.portfolioLogoPath}
+        //                       className={logoClass}
+        //                       onClick={this.onClickReload}/>
 
         var aboutButtonLarge;
         let aboutButtonStyles = {};
@@ -80,7 +80,7 @@ export default class Filters extends React.Component {
             var sTitle = AppStore.getAboutProject().aboutTitle;
             if (!window.portfolio_showSapLogo) {
                 // move the logo to the right if the SAP logo is not shown
-                aboutButtonStyles = { left: "10px !important" };
+                aboutButtonStyles = {left: "10px !important"};
             }
             aboutButtonLarge = <div className="filterAboutButton filterAboutButtonLarge" style={aboutButtonStyles} onClick={this.onAbout}><span>{sTitle}</span></div>;
         }
@@ -160,7 +160,7 @@ export default class Filters extends React.Component {
             </div>
         );
     }
-    onFilterContainerAnimationEnd(event) {
+    onFilterContainerAnimationEnd (event) {
         /*
         if(event.propertyName === 'opacity') {
             if(window.getComputedStyle(event.target)[event.propertyName] == 0) {
@@ -170,7 +170,7 @@ export default class Filters extends React.Component {
         */
     }
 
-    onKeyDownFilterMenuButton(event) {
+    onKeyDownFilterMenuButton (event) {
         //Enter or Space
         if(event.key === 'Enter' || event.keyCode == 32) {
             this.onClickFilterMenuButton(event);
@@ -178,7 +178,7 @@ export default class Filters extends React.Component {
             Actions.trigger(ActionTypes.TOGGLE_FILTER, true);
         }
     }
-    onClickFilterMenuButton(oEvent) {
+    onClickFilterMenuButton (oEvent) {
         oEvent.stopPropagation();
         if (!window.portfolio_lockSidebar) {
             if (AppStore.isSearching()) {
@@ -191,18 +191,18 @@ export default class Filters extends React.Component {
             Actions.trigger(ActionTypes.CLEAR_FILTERS);
         }
     }
-    onAbout(oEvent) {
+    onAbout (oEvent) {
         oEvent.stopPropagation();
         if (AppStore.getAboutProject()) {
             Actions.trigger(ActionTypes.INIT_DETAIL_VIEW, AppStore.getAboutProject());
         }
     }
-    onClickReload(event) {
+    onClickReload (event) {
         if (!AppStore.getFilterOverview()) {
             window.location.reload();
         }
     }
-    onClear(oEvent) {
+    onClear (oEvent) {
         let that = this;
 
         oEvent.stopPropagation();
@@ -218,7 +218,7 @@ export default class Filters extends React.Component {
 
     }
 
-    onClick(oEvent) {
+    onClick (oEvent) {
         if (this.props.overview && !window.portfolio_lockSidebar) {
             Actions.trigger(ActionTypes.TOGGLE_FILTER, false);
         }
@@ -228,7 +228,7 @@ export default class Filters extends React.Component {
     }
 
 
-    onToggleSearch(e) {
+    onToggleSearch (e) {
         if (e.shiftKey) {
             Actions.trigger(ActionTypes.TOGGLE_MATRIX);
         } else {
@@ -239,7 +239,7 @@ export default class Filters extends React.Component {
         }
     }
 
-    onToggleMatrix(e) {
+    onToggleMatrix (e) {
         Actions.trigger(ActionTypes.TOGGLE_MATRIX);
     }
 

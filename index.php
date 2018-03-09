@@ -201,6 +201,7 @@
         </script>
 
         <div id="icnPortfolio" role="main"></div>
+        <div id="imprint" style="position:absolute;left:12px;bottom:25px;padding:0 15px;"><a href="http://thisisdesignthinking.net/imprint/">Imprint</a></div>
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/bundle.js"></script>
         <script type="text/javascript">
             if(navigator.userAgent.match(/MSIE [1-9]\./)){

@@ -5,7 +5,7 @@ require('core-js');
 import React from 'react';
 import AppStore from '../../stores/AppStore';
 import Actions from "../../actions/Actions";
-import { ActionTypes } from "../../constants/constants";
+import {ActionTypes} from "../../constants/constants";
 
 import {
     SCALE_MIN,
@@ -17,7 +17,7 @@ import {
 
 export default class Particle extends React.Component {
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.scale = 0;
@@ -45,7 +45,7 @@ export default class Particle extends React.Component {
 
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate (nextProps, nextState) {
         let distX = nextProps.focus.centerX - nextProps.project.nextLeft,
             distY = nextProps.project.nextTop - nextProps.focus.centerY;
         let dist = distY * distY;
@@ -79,7 +79,7 @@ export default class Particle extends React.Component {
         return scaleChanged || positionChanged || animationChanged || visibilityChanged;
     }
 
-    render() {
+    render () {
         this.scale = this.props.project.fixScale ? this.props.project.fixScale : this.newScale;
         this.top = this.props.project.nextTop ? this.props.project.nextTop : this.top;
         this.cssVisibility = this.props.project.cssVisibility ? this.props.project.cssVisibility : "visible";
@@ -110,7 +110,7 @@ export default class Particle extends React.Component {
         let background = ( <div className = 'particle__inner-container' >
             <div className = { `particle__inner-background particle__${cat}` }
             style = {
-                { backgroundImage: this.backgroundUrl }
+                {backgroundImage: this.backgroundUrl}
             }
             /> </div >
         );
@@ -127,6 +127,8 @@ export default class Particle extends React.Component {
             display: this.is_updated ? "block" : "none",
         };
 
+        let textLengthClass = this.props.project.title.length > 130 ? "text_xsmall" : this.props.project.title.length > 80 ? "text_small" : "";
+
         return ( < a onFocus={this.onFocus} onKeyDown={this.onKeyDown} href = { '/' + this.props.project.slug }
             className = { 'particle ' + this.animation }
             style = { positionStyle }
@@ -135,14 +137,14 @@ export default class Particle extends React.Component {
             style = { scaleStyle } >
             < div className = { `particle__inner particle__${cat}` } > { background } < div className = "particle__inner-table" >
             < div className = "particleUpdatedTag"
-            style = { updateTagStyle } > Updated </div> < h4 className = "particle__inner-heading"
+            style = { updateTagStyle } > Updated </div> < h4 className = { 'particle__inner-heading ' + textLengthClass }
             dangerouslySetInnerHTML = {
-                { __html: this.props.project.title }
+                {__html: this.props.project.title}
             }
             /> </div > </div> </div > </a>
         );
     }
-    onFocus(event) {
+    onFocus (event) {
         const scroller =  this.props.iScroller;
         const rectangle = document.activeElement.getBoundingClientRect();
         const scrollByY = PARTICLE_SIZE()*this.scale;
@@ -153,19 +155,19 @@ export default class Particle extends React.Component {
         }
     }
 
-    onKeyDown(event) {
+    onKeyDown (event) {
         //Enter or Space
         if(event.key === 'Enter' || event.keyCode == 32) {
             this.onClick(event);
         }
     }
 
-    onClick(event) {
+    onClick (event) {
         event.preventDefault();
         Actions.trigger(ActionTypes.INIT_DETAIL_VIEW, this.props.project);
     }
 
-    _clamp(value, min, max) {
+    _clamp (value, min, max) {
         if (value < min) return min;
         if (value > max) return max;
         return value;
