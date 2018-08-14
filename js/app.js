@@ -2,13 +2,13 @@ require("!style!raw!sass!./app.scss");
 require('core-js');
 
 import React from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 
 import AppStore from './stores/AppStore';
 import AppRouter from './router/AppRouter';
 import IdleAnimation from './animation/IdleAnimation';
 import Actions from "./actions/Actions";
-import { ActionTypes } from "./constants/constants";
+import {ActionTypes} from "./constants/constants";
 
 import Blur from './components/blur/Blur';
 import Feedback from './components/feedback/Feedback';
@@ -25,7 +25,7 @@ import Backlink from './components/backlink/Backlink';
 
 
 class ICNPortfolioApp extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -54,12 +54,12 @@ class ICNPortfolioApp extends React.Component {
         this.onAppStoreChanged = this.onAppStoreChanged.bind(this);
     }
 
-    handleResize(e) {
+    handleResize (e) {
         Actions.trigger(ActionTypes.RESIZE);
         //repositioning
     }
 
-    componentDidMount() {
+    componentDidMount () {
         AppStore.on('change', this.onAppStoreChanged);
         window.addEventListener('resize', this.handleResize.bind(this));
         setTimeout(() => {
@@ -80,11 +80,11 @@ class ICNPortfolioApp extends React.Component {
         Actions.trigger(ActionTypes.RESIZE);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         AppStore.removeListener("change", this.onAppStoreChanged);
     }
 
-    _handleKeyDown(event) {
+    _handleKeyDown (event) {
       //  w n i j m
         if(event.ctrlKey) {
          if(localStorage.getItem('locked'))
@@ -100,7 +100,7 @@ class ICNPortfolioApp extends React.Component {
         }
     }
 
-    _handleClick(event){
+    _handleClick (event){
       if (localStorage.getItem("locked") === "true"){
         if (event.target.tagName === "A"){
           event.preventDefault();
@@ -113,7 +113,18 @@ class ICNPortfolioApp extends React.Component {
     }
 
 
-    render() {
+    render () {
+        var divStyle = {
+            backgroundImage: 'url(' + window.portfolioLogoPath + ')',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'left center',
+            backgroundSize: 'contain',
+            boxSizing: 'border-box',
+            paddingLeft: '60px',
+            fontSize: '20px',
+            lineHeight: 1.4,
+            color: '#ddd'
+        };
 
         var that = this; {
             const accessibleMode = this.state.accessibleMode? 'accessible-mode' : '';
@@ -142,12 +153,16 @@ class ICNPortfolioApp extends React.Component {
                   }
                 })()}
 
+                
 
-                <img id="icnLogo"
+                <div id="icnLogo" style={divStyle} alt="Hasso Plattner Design Thinking Research Project"
+                              className="filterLogo">Design Thinking Research Program</div>    
+
+                {/* <img id="icnLogo"
                               alt="Innovation Center Network"
                               src={window.portfolioLogoPath}
                               className="filterLogo"
-                              />
+                              /> */}
                 <Backlink link={AppRouter.getBacklink()} />
 
 
@@ -201,7 +216,7 @@ class ICNPortfolioApp extends React.Component {
         }
     }
 
-    onAppStoreChanged() {
+    onAppStoreChanged () {
         this.setState({
             currentProject: AppStore.getCurrentProject(),
             projects: AppStore.getProjects(),
